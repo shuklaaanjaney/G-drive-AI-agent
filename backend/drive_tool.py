@@ -1,11 +1,16 @@
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+import os
+import json
+
 
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
 
 
-credentials = service_account.Credentials.from_service_account_file(
-    'C:/Users/Aanjaney Shukla/OneDrive/Pictures/Desktop/drive-ai-agent/service_account.json',
+service_account_info = json.loads(os.getenv("GOOGLE_CREDENTIALS"))
+
+credentials = service_account.Credentials.from_service_account_info(
+    service_account_info,
     scopes=SCOPES
 )
 
