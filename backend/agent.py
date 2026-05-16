@@ -7,19 +7,33 @@ client = Groq(
 
 def generate_query(user_input):
 
-    prompt = f"""
-    Convert this natural language request into a Google Drive query.
+    try:
+        prompt = f"""
+        Convert the following request into a Google Drive search query.
 
-    User request: {user_input}
+        Request: {user_input}
 
-    Only return the query string.
-    """
+        Examples:
+        - Find resume pdf
+        -> name contains 'resume' and mimeType='application/pdf'
 
-    response = client.chat.completions.create(
-        model="llama3-8b-8192",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
+        - Find screenshots
+        -> name contains 'Screenshot'
 
-    return response.choices[0].message.content.strip()
+        Only return the query.
+        """
+
+        response = client.chat.completions.create(
+            model="llama3-8b-8192",
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
+        )
+
+        query = response.choices[0].message.content.strip()
+
+        return query
+
+    except Exception as e:
+        print("ERROR:", e)
+        return ""
