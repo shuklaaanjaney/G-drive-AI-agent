@@ -1,41 +1,25 @@
-from langchain_groq import ChatGroq
-from dotenv import load_dotenv
+from groq import Groq
+import os
 
-# Load environment variables
-load_dotenv()
-
-# Initialize Groq model
-llm = ChatGroq(
-   model="llama-3.3-70b-versatile"
+client = Groq(
+    api_key=os.getenv("GROQ_API_KEY")
 )
 
-def generate_query(user_message):
+def generate_query(user_input):
 
     prompt = f"""
-    You are a Google Drive search assistant.
+    Convert this natural language request into a Google Drive query.
 
-    Convert the user's request into a valid Google Drive API q query.
+    User request: {user_input}
 
-    Examples:
-
-    User: Find resume PDFs
-    Query:
-    name contains 'resume' and mimeType='application/pdf'
-
-    User: Find image files
-    Query:
-    mimeType contains 'image/'
-
-    User: Find screenshots
-    Query:
-    name contains 'Screenshot'
-
-    Only return the query.
-
-    User request:
-    {user_message}
+    Only return the query string.
     """
 
-    response = llm.invoke(prompt)
+    response = client.chat.completions.create(
+        model="llama3-8b-8192",
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
 
-    return response.content
+    return response.choices[0].message.content.strip()
