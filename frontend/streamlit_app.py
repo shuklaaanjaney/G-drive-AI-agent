@@ -182,9 +182,10 @@ if prompt:
             try:
 
                 response = requests.post(
-                    "g-drive-ai-agent-production.up.railway.app",
-                    json={"message": prompt}
+                "https://g-drive-ai-agent-production.up.railway.app",
+                json={"message": prompt}
                 )
+            
 
                 data = response.json()
 
