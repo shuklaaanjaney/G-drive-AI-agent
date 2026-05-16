@@ -182,7 +182,7 @@ if prompt:
             try:
 
                 response = requests.post(
-                "https://g-drive-ai-agent-production.up.railway.app",
+                "https://g-drive-ai-agent-production.up.railway.app/chat",
                 json={"message": prompt}
                 )
             
@@ -195,7 +195,7 @@ if prompt:
                 st.markdown("### 🧠 Generated Query")
 
                 st.markdown(
-                    f'<div class="query-box">{data["generated_query"]}</div>',
+                    f'<div class="query-box">{data["query"]}</div>',
                     unsafe_allow_html=True
                 )
 
