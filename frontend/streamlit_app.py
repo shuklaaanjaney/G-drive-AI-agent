@@ -195,7 +195,7 @@ if prompt:
                 st.markdown("### 🧠 Generated Query")
 
                 st.markdown(
-                    f'<div class="query-box">{data["query"]}</div>',
+                   f'<div class="query-box">{data["generated_query"]}</div>',
                     unsafe_allow_html=True
                 )
 
