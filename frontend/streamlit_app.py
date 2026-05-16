@@ -1,110 +1,110 @@
 import streamlit as st
 import requests
 
+
 st.set_page_config(
     page_title="Drive AI Agent",
     page_icon="📁",
     layout="wide"
 )
 
-st.markdown(
-    """
-    <style>
 
-    .main {
-        background-color: #0f172a;
-        color: white;
-    }
+st.markdown("""
+<style>
 
-    .hero {
-        padding: 2rem;
-        border-radius: 20px;
-        background: linear-gradient(135deg, #111827, #1e293b);
-        border: 1px solid #334155;
-        margin-bottom: 2rem;
-        box-shadow: 0px 0px 25px rgba(0,0,0,0.3);
-    }
+html, body, [class*="css"] {
+    background-color: #020617;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+}
 
-    .hero-title {
-        font-size: 3rem;
-        font-weight: 800;
-        color: white;
-    }
+.main {
+    background-color: #020617;
+}
 
-    .hero-subtitle {
-        font-size: 1.1rem;
-        color: #cbd5e1;
-        margin-top: 10px;
-    }
+.hero {
+    padding: 2.5rem;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #111827, #1e293b);
+    border: 1px solid #334155;
+    margin-bottom: 2rem;
+}
 
-    .query-box {
-        background-color: #111827;
-        padding: 15px;
-        border-radius: 12px;
-        border: 1px solid #374151;
-        margin-top: 10px;
-        margin-bottom: 20px;
-        font-size: 16px;
-        color: #22c55e;
-    }
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: white;
+}
 
-    .file-card {
-        background: linear-gradient(135deg, #1e293b, #111827);
-        padding: 20px;
-        border-radius: 16px;
-        margin-bottom: 18px;
-        border: 1px solid #334155;
-        transition: 0.3s;
-    }
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #cbd5e1;
+    margin-top: 10px;
+}
 
-    .file-card:hover {
-        transform: scale(1.01);
-        border: 1px solid #3b82f6;
-    }
+.query-box {
+    background-color: #111827;
+    padding: 18px;
+    border-radius: 14px;
+    border: 1px solid #334155;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: #22c55e;
+    font-size: 16px;
+}
 
-    .file-name {
-        font-size: 20px;
-        font-weight: 700;
-        color: white;
-        margin-bottom: 8px;
-    }
+.file-card {
+    background: linear-gradient(135deg, #1e293b, #111827);
+    padding: 20px;
+    border-radius: 18px;
+    margin-bottom: 18px;
+    border: 1px solid #334155;
+}
 
-    .file-type {
-        color: #cbd5e1;
-        margin-bottom: 15px;
-    }
+.file-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
 
-    .footer {
-        text-align: center;
-        margin-top: 40px;
-        color: #94a3b8;
-        font-size: 14px;
-    }
+.file-type {
+    color: #cbd5e1;
+    margin-top: 8px;
+    margin-bottom: 15px;
+}
 
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
 
 with st.sidebar:
+
     st.title("⚡ Drive AI Agent")
 
     st.markdown("---")
 
-    st.markdown("### 🚀 Features")
+    st.markdown("## 🚀 Features")
 
     st.markdown("""
-    - AI-powered Google Drive search
-    - Natural language understanding
-    - PDF & image discovery
-    - FastAPI backend
-    - Streamlit frontend
-    - Groq LLM integration
+    - AI-powered Google Drive Search
+    - Natural Language Understanding
+    - PDF & Image Discovery
+    - FastAPI Backend
+    - Streamlit Frontend
+    - Groq LLM Integration
     """)
 
     st.markdown("---")
 
-    st.markdown("### 💡 Example Queries")
+    st.markdown("## 💡 Example Queries")
 
     st.code("Find resume pdf")
     st.code("Find screenshots")
@@ -112,21 +112,21 @@ with st.sidebar:
     st.code("Find pdf documents")
 
 
-st.markdown(
-    """
-    <div class="hero">
-        <div class="hero-title">📁 Drive AI Agent</div>
-        <div class="hero-subtitle">
-            Search Google Drive using natural language powered by AI.
-        </div>
+
+st.markdown("""
+<div class="hero">
+    <div class="hero-title">📁 Drive AI Agent</div>
+    <div class="hero-subtitle">
+        Search Google Drive using natural language powered by AI.
     </div>
-    """,
-    unsafe_allow_html=True
-)
+</div>
+""", unsafe_allow_html=True)
+
 
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
 
 
 for msg in st.session_state.messages:
@@ -136,7 +136,9 @@ for msg in st.session_state.messages:
         st.markdown(msg["content"])
 
         if msg.get("query"):
+
             st.markdown("### 🧠 Generated Query")
+
             st.markdown(
                 f'<div class="query-box">{msg["query"]}</div>',
                 unsafe_allow_html=True
@@ -163,18 +165,22 @@ for msg in st.session_state.messages:
                     file["webViewLink"]
                 )
 
+
 prompt = st.chat_input("Ask about your Google Drive files...")
 
 if prompt:
 
+   
     st.session_state.messages.append({
         "role": "user",
         "content": prompt
     })
 
+
     with st.chat_message("user"):
         st.markdown(prompt)
 
+    
     with st.chat_message("assistant"):
 
         with st.spinner("Searching Google Drive..."):
@@ -182,26 +188,37 @@ if prompt:
             try:
 
                 response = requests.post(
-                "https://g-drive-ai-agent-production.up.railway.app/chat",
-                json={"message": prompt}
+                    "https://g-drive-ai-agent-production.up.railway.app/chat",
+                    json={"message": prompt}
                 )
-            
 
                 data = response.json()
 
+                
+
+                query_text = (
+                    data.get("generated_query")
+                    or data.get("query")
+                    or "No query returned"
+                )
+
+                files = data.get("files", [])
+
+              
+
                 st.success("Search completed successfully!")
 
-                
+            
                 st.markdown("### 🧠 Generated Query")
 
                 st.markdown(
-                   f'<div class="query-box">{data["generated_query"]}</div>',
+                    f'<div class="query-box">{query_text}</div>',
                     unsafe_allow_html=True
                 )
 
-                files = data["files"]
 
                 if len(files) == 0:
+
                     st.warning("No matching files found.")
 
                 else:
@@ -225,23 +242,24 @@ if prompt:
                             file["webViewLink"]
                         )
 
-               
+            
+
                 st.session_state.messages.append({
                     "role": "assistant",
-                    "content": "Search completed",
-                    "query": data["generated_query"],
+                    "content": "Search completed successfully!",
+                    "query": query_text,
                     "files": files
                 })
 
             except Exception as e:
+
                 st.error(f"Error: {str(e)}")
 
-st.markdown(
-    """
-    <div class="footer">
-        Built using FastAPI • Streamlit • Groq • Google Drive API
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+
+
+st.markdown("""
+<div class="footer">
+    Built using FastAPI • Streamlit • Groq • Google Drive API
+</div>
+""", unsafe_allow_html=True)
 
